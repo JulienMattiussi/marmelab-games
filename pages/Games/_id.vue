@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div>
-      <img class="logo" alt="Logo" src="~assets/marmelab_games.png">
+      <img class="logo" alt="Logo" src="~assets/marmelab_games.png" />
       <h1 class="title">{{game.title}}</h1>
       <h2 class="subtitle">
         A game using
@@ -10,12 +10,13 @@
           <strong>{{game.author}}</strong>
         </a>
       </h2>
-      <game :game="game"/>
+      <game :game="game" />
       <h2 class="subtitle">
         <a target="_blank" :href="game.repo">Download source here</a>
       </h2>
       <div class="links">
-        <a href="/" class="button--blue">Home</a>
+        <page-link href="/Games" title="All games" />
+        <page-link href="/" title="Home" />
       </div>
     </div>
   </section>
@@ -23,14 +24,16 @@
 
 <script>
 import Game from "~/components/Game.vue";
+import PageLink from "~/components/PageLink.vue";
 import games from "~/data/games";
 
 let game;
 
-//const gameName = global.location.pathname;
-//console.log(gameName);
 export default {
-  components: { Game },
+  components: {
+    Game,
+    PageLink
+  },
   data() {
     const gameName = this.$nuxt.$route.params.id;
     game = games.find(game => game.name === gameName);
@@ -74,6 +77,8 @@ export default {
 }
 
 .links {
-  padding-top: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 </style>
