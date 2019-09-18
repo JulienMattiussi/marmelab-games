@@ -2,6 +2,14 @@
 
 > Nuxt project listing integration games for playing online
 
+**Start for development:**
+
+- make start
+
+**Start for prod:**
+
+- make start-prod
+
 ## Build Setup
 
 ``` bash
@@ -20,4 +28,3 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
-
