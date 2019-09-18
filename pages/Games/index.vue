@@ -5,12 +5,24 @@
       <h1 class="title">All games list</h1>
       <h2 class="subtitle">Discover all production from Marmelab</h2>
       <div class="display-row">
-        <dropdown name="Choose a game" :items="getGames(games)" />
-        <dropdown name="Choose an author" :items="getAuthors(games)" />
-        <dropdown name="Choose a language" :items="getLanguages(games)" />
+        <dropdown
+          name="Choose a game"
+          :items="getGames(games)"
+          :changeFilter="setFilter(filters, 'gameName')"
+        />
+        <dropdown
+          name="Choose an author"
+          :items="getAuthors(games)"
+          :changeFilter="setFilter(filters, 'author')"
+        />
+        <dropdown
+          name="Choose a language"
+          :items="getLanguages(games)"
+          :changeFilter="setFilter(filters, 'language')"
+        />
       </div>
       <div class="games-panel">
-        <div v-for="game in games" :key="game.name">
+        <div v-for="game in current(games, filters)" :key="game.name">
           <game-thumb :game="game" />
         </div>
       </div>
@@ -33,9 +45,32 @@ export default {
     Dropdown
   },
   data() {
-    return { games };
+    return {
+      games,
+      filters: {
+        gameName: null,
+        author: null,
+        language: null
+      }
+    };
   },
   methods: {
+    current(games, filters) {
+      if (!filters || Object.keys(filters).length === 0) {
+        console.log(filters);
+        return games;
+      }
+      return games.filter(game => {
+        return Object.keys(filters).every(
+          filter => filters[filter] == null || filters[filter] === game[filter]
+        );
+      });
+    },
+    setFilter(filters, filter) {
+      return value => {
+        filters[filter] = value;
+      };
+    },
     getGames(games) {
       return [...new Set(games.map(game => game.gameName).sort())];
     },
@@ -85,6 +120,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
+  width: 1000px;
 }
 
 .display-row {
