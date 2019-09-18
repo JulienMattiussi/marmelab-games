@@ -1,19 +1,51 @@
 <template>
   <section class="container">
     <div>
-      <img class="logo" alt="Logo" src="~assets/marmelab_games.png">
+      <img class="logo" alt="Logo" src="~assets/marmelab_games.png" />
       <h1 class="title">All games list</h1>
       <h2 class="subtitle">Discover all production from Marmelab</h2>
-      <div class="links">
-        <a href="/" class="button--blue">Home</a>
+      <div class="display-row">
+        <dropdown name="Choose a game" :items="getGames(games)" />
+        <dropdown name="Choose an author" :items="getAuthors(games)" />
+        <dropdown name="Choose a language" :items="getLanguages(games)" />
+      </div>
+      <div class="games-panel">
+        <div v-for="game in games" :key="game.name">
+          <game-thumb :game="game" />
+        </div>
+      </div>
+      <div class="display-row">
+        <page-link href="/" title="Home" />
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import GameThumb from "~/components/GameThumb.vue";
+import PageLink from "~/components/PageLink.vue";
+import Dropdown from "~/components/Dropdown.vue";
+import games from "~/data/games";
 export default {
-  components: {}
+  components: {
+    GameThumb,
+    PageLink,
+    Dropdown
+  },
+  data() {
+    return { games };
+  },
+  methods: {
+    getGames(games) {
+      return [...new Set(games.map(game => game.gameName).sort())];
+    },
+    getAuthors(games) {
+      return [...new Set(games.map(game => game.author).sort())];
+    },
+    getLanguages(games) {
+      return [...new Set(games.map(game => game.language).sort())];
+    }
+  }
 };
 </script>
 
@@ -49,7 +81,15 @@ export default {
   padding-bottom: 15px;
 }
 
-.links {
-  padding-top: 15px;
+.games-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.display-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 </style>

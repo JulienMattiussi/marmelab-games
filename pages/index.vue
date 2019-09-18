@@ -1,13 +1,13 @@
 <template>
   <section class="container">
     <div>
-      <marmelab-logo/>
+      <marmelab-logo />
       <h1 class="title">Marmelab games</h1>
       <h2 class="subtitle">Discover Marmelab's entertainment production</h2>
-      <best-games-panel :games="games"/>
+      <best-games-panel :games="games" />
       <div class="links">
-        <a href="Games" class="button--blue">All games</a>
-        <a href="https://marmelab.com/" target="marmelab" class="button--grey">Main site</a>
+        <page-link href="Games" title="All games" />
+        <page-link href="https://marmelab.com/" title="Main site" :extern="true" />
       </div>
     </div>
   </section>
@@ -16,12 +16,14 @@
 <script>
 import MarmelabLogo from "~/components/MarmelabLogo.vue";
 import BestGamesPanel from "~/components/BestGamesPanel.vue";
+import PageLink from "~/components/PageLink.vue";
 import games from "~/data/games";
 
 export default {
   components: {
     MarmelabLogo,
-    BestGamesPanel
+    BestGamesPanel,
+    PageLink
   },
   data() {
     return { games };
@@ -57,6 +59,8 @@ export default {
 }
 
 .links {
-  padding-top: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 </style>
